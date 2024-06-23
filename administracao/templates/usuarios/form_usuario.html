@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="card card-primary">
+    <div class="card-header">
+        <div class="card-title">Cadastro de serviço</div>
+    </div>
+    <div class="card-body">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                {% bootstrap_field form_usuario.username %}
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {% bootstrap_field form_usuario.password1 %}
+                    </div>         
+                </div>                
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {% bootstrap_field form_usuario.password2 %}
+                    </div>         
+                </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Salvar</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}
