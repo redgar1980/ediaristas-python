@@ -1,7 +1,9 @@
 from rest_framework import serializers
 from ..models import Diaria, Usuario
 from administracao.services import servico_service
-from ..services.cidades_atendimento_service import verificar_disponibilidade_cidade
+from ..services.cidades_atendimento_service import (
+    verificar_disponibilidade_cidade, 
+    buscar_cidade_ibge)
 
 class UsuarioDiariaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,6 +30,9 @@ class DiariaSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Não há diaristas para o CEP informado")
         return attrs
 
+    def validate_codigo_ibge(self, codigo_ibge):
+        buscar_cidade_ibge(codigo_ibge)
+        return codigo_ibge
     
     def validate_preco(self, preco):
         servico = servico_service.listar_servico_id(self.initial_data["servico"])
