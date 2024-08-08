@@ -54,3 +54,10 @@ class DiariaSerializer(serializers.ModelSerializer):
         if tempo_atendimento != horas_total:
             raise serializers.ValidationError("Valores não correspondem")
         return tempo_atendimento
+    
+    def validate_data_atendimento(self, data_atendimento):
+        if data_atendimento.hour < 6:
+            raise serializers.ValidationError("Horário de início não pode ser menor que 6h")
+        if data_atendimento.hour + self.initial_data["tempo_atendimento"] > 22:
+            raise serializers.ValidationError("O horário de atendimento não pode passar das 22:00")
+        return data_atendimento
