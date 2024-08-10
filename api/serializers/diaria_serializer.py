@@ -4,6 +4,8 @@ from administracao.services import servico_service
 from ..services.cidades_atendimento_service import (
     verificar_disponibilidade_cidade, 
     buscar_cidade_ibge)
+from ..hateoas import Hateoas
+from django.urls import reverse
 
 class UsuarioDiariaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,6 +15,7 @@ class UsuarioDiariaSerializer(serializers.ModelSerializer):
 class DiariaSerializer(serializers.ModelSerializer):
     cliente = UsuarioDiariaSerializer(read_only=True)
     valor_comissao = serializers.DecimalField(read_only=True, max_digits=5, decimal_places=2)
+    links = serializers.SerializerMethodField(required=False)
 
     class Meta:
         model = Diaria
@@ -73,3 +76,12 @@ class DiariaSerializer(serializers.ModelSerializer):
         if data_atendimento.hour + self.initial_data["tempo_atendimento"] > 22:
             raise serializers.ValidationError("O horário de atendimento não pode passar das 22:00")
         return data_atendimento
+    
+    def get_links(self, obj):
+        usuario = self.context['request'].user
+        links = Hateoas()
+        if obj.status == 1:
+            if usuario.tipo_usuario == 1:
+                links.add_post('pagar_diaria', reverse('pagamento-diaria-list',
+                    kwargs={'diaria_id': obj.id}))
+        return links.to_array()
