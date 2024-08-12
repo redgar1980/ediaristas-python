@@ -7,7 +7,8 @@ from .views import (diaristas_localidade_view,
                     usuario_view,
                     me_view,
                     diaria_view,
-                    pagamento_diaria_view)
+                    pagamento_diaria_view,
+                    endereco_diarista_view)
 
 urlpatterns = [
      path('diaristas/localidades', diaristas_localidade_view.DiaristasLocalidades.as_view(),
@@ -20,6 +21,7 @@ urlpatterns = [
           name='servico-list'),
      path('', inicio_view.Inicio.as_view(), name='inicio'),
      path('usuarios', usuario_view.Usuario.as_view(), name='usuario-list'),
+     path('usuarios/enderecos',  endereco_diarista_view.EnderecoDiarista.as_view() ,name='endereco-detail'),
      path('me', me_view.Me.as_view(), name='me-list'),
      path('diarias', diaria_view.Diaria.as_view(), name='diaria-list'),
      path('diarias/<int:diaria_id>', diaria_view.DiariaID.as_view(), name='diaria-detail'),
