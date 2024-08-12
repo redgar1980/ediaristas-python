@@ -8,7 +8,8 @@ from .views import (diaristas_localidade_view,
                     me_view,
                     diaria_view,
                     pagamento_diaria_view,
-                    endereco_diarista_view)
+                    endereco_diarista_view,
+                    cidades_atendimento_diarista_view)
 
 urlpatterns = [
      path('diaristas/localidades', diaristas_localidade_view.DiaristasLocalidades.as_view(),
@@ -26,5 +27,7 @@ urlpatterns = [
      path('diarias', diaria_view.Diaria.as_view(), name='diaria-list'),
      path('diarias/<int:diaria_id>', diaria_view.DiariaID.as_view(), name='diaria-detail'),
      path('diarias/<int:diaria_id>/pagamentos', pagamento_diaria_view.PagamentoDiaria.as_view(), 
-          name='pagamento-diaria-list')
+          name='pagamento-diaria-list'),
+     path('usuarios/cidades-atendidas', cidades_atendimento_diarista_view.CidadesAtendimentoDiaristaID.as_view(),
+          name='cidade-atendimento-diarista-detail')
 ]
