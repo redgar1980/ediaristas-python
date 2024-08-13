@@ -102,6 +102,9 @@ class Diaria(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     update_at = models.DateTimeField(auto_now=True, null=True)
 
+    objects = models.Manager()
+    diaria_objects = diarista_manager.DiaristaManager()
+
 class CidadesAtendimento(models.Model):
     codigo_ibge = models.IntegerField(null=False, blank=False)
     cidade = models.CharField(max_length=100, null=False, blank=False)
