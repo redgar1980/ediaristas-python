@@ -5,7 +5,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import validate_image_file_extension
 from localflavor.br.models import BRCPFField 
-from .managers import diarista_manager
+from .managers import diarista_manager, diaria_manager
 from django.contrib.auth.models import UserManager
 from administracao.models import Servico
 
@@ -103,7 +103,7 @@ class Diaria(models.Model):
     update_at = models.DateTimeField(auto_now=True, null=True)
 
     objects = models.Manager()
-    diaria_objects = diarista_manager.DiaristaManager()
+    diaria_objects = diaria_manager.DiariaManager()
 
 class CidadesAtendimento(models.Model):
     codigo_ibge = models.IntegerField(null=False, blank=False)
