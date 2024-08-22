@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status as status_http
 from ..services import candidatar_diarista_diaria_service
 
-class CadidatarDiaristaDiaria(APIView):
+class CandidatarDiaristaDiaria(APIView):
     permission_classes = [DiaristaPermission]
 
     def post(self, request, diaria_id, format=None):

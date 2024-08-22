@@ -9,7 +9,7 @@ class EnderecoDiarista(APIView):
     permission_classes = [diarista_permission.DiaristaPermission]
     def put(self, request, format=None):
         serializer_endereco_diarista = EnderecoDiaristaSerializer(data=request.data, 
-            context={'request': request})
+            context={'request': request})   
         if serializer_endereco_diarista.is_valid():
             serializer_endereco_diarista.save()
             return Response(serializer_endereco_diarista.validated_data, 

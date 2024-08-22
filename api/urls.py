@@ -28,7 +28,7 @@ urlpatterns = [
      path('me', me_view.Me.as_view(), name='me-list'),
      path('diarias', diaria_view.Diaria.as_view(), name='diaria-list'),
      path('diarias/<int:diaria_id>', diaria_view.DiariaID.as_view(), name='diaria-detail'),
-     path('diarias/<int:diaria_id>/candidatar', candidatar_diarista_diaria_view.CadidatarDiaristaDiaria.as_view(),
+     path('diarias/<int:diaria_id>/candidatar', candidatar_diarista_diaria_view.CandidatarDiaristaDiaria.as_view(),
           name= 'candidatar-diarista-diaria-list'),
      path('diarias/<int:diaria_id>/pagamentos', pagamento_diaria_view.PagamentoDiaria.as_view(), 
           name='pagamento-diaria-list'),
