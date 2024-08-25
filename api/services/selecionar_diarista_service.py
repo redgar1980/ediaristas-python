@@ -7,6 +7,8 @@ def selecionar_diarista_diaria(diaria_id):
     diarista_compativel = []
     for candidata in candidatas:
         # calcular o indice de compatibilidade
-        diarista_compativel.append(calcular_indice_compatibilidade(diaria.id, candidata.id))
+        indice = calcular_indice_compatibilidade(diaria.id, candidata.id)
+        diarista_compativel.append(indice)
     diarista = diarista_compativel.index(max(diarista_compativel))
+    print(diarista)
     candidatar_diarista_diaria_service.contratar_diarista_diaria(diaria, candidatas[diarista].id)

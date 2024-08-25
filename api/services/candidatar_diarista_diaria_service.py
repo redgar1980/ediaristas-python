@@ -8,6 +8,7 @@ def relacionar_candidata_diaria(diaria_id, diarista_id):
     diarista = Usuario.objects.get(id=diarista_id)
     if verificar_diferenca_data_contratacao(diaria.created_at) > datetime.timedelta(hours=24):
         contratar_diarista_diaria(diaria, diarista_id)
+        return
     if diaria.candidatas__count >= 3:
         raise serializers.ValidationError("A diária já possui 3 candidatas")
     if diaria.candidatas__count < 2:
@@ -19,11 +20,10 @@ def relacionar_candidata_diaria(diaria_id, diarista_id):
 def contratar_diarista_diaria(diaria, diarista_id):
     if diaria.status != 2:
         raise serializers.ValidationError("Apenas diárias pagas podem ser realizadas")
-    else:
-        diarista = Usuario.objects.get(id=diarista_id)
-        diaria.diarista = diarista
-        diaria.status = 3
-        diaria.save()
+    diarista = Usuario.objects.get(id=diarista_id)
+    diaria.diarista = diarista
+    diaria.status = 3
+    diaria.save()
 
 def verificar_diferenca_data_contratacao(data_diaria):
     data_atual = datetime.datetime.now()
