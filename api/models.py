@@ -118,3 +118,15 @@ class Pagamento(models.Model):
     diaria = models.ForeignKey(Diaria, null=False, blank=False, on_delete=models.DO_NOTHING)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     update_at = models.DateTimeField(auto_now=True, null=True)
+
+class AvaliacaoDiaria(models.Model):
+    descricao = models.TextField(null=False, blank=False)
+    nota = models.FloatField(null=False, blank=False)
+    visibilidade = models.IntegerField(null=False, blank=False)
+    diaria = models.ForeignKey(Diaria, null=False, blank=False, on_delete=models.CASCADE,
+        related_name='avaliacao_diaria')
+    avaliador = models.ForeignKey(Usuario, null=True, blank=False, on_delete=models.CASCADE,
+        related_name='avaliador')
+    avaliado = models.ForeignKey(Usuario, null=False, blank=False, on_delete=models.CASCADE,
+        related_name='avaliado')
+    
