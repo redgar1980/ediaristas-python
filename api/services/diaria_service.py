@@ -7,9 +7,8 @@ import googlemaps
 import environ
 
 env = environ.Env()
-env.read_env()
 
-CHAVE_DISTANCE_MATRIX = env('CHAVE_DISTANCE_MATRIX')
+env.read_env(env.str('ENV_PATH','./ediaristas/.env'))
 
 def listar_diaria_id(diaria_id):
     return Diaria.objects.get(id=diaria_id)
@@ -37,7 +36,7 @@ def calcular_indice_compatibilidade(diaria_id, diarista_id):
     return  (reputacao_diarista - (distancia_diarista_diaria/10)) / 2
 
 def calcular_distancia_diaria_diarista(cep_diaria, cep_diarista):
-    gmaps = googlemaps.Client(key=CHAVE_DISTANCE_MATRIX)
+    gmaps = googlemaps.Client(key=env('GOOGLE_API_KEY'))
     cep_formatado_diaria = cep_diaria[:5] + '-' + cep_diaria[5:]
     cep_formatado_diarista = cep_diarista[:5] + '-' + cep_diarista[5:]
     distancia = gmaps.distance_matrix(cep_formatado_diaria, 
