@@ -3,4 +3,4 @@ from django.db.models import Avg
 
 class AvaliacaoManager(models.Manager):
     def reputacao_usuario(self, usuario_id):
-        return self.get_queryset().filter(avaliado=usuario_id).aaggregate(Avg('nota'))
+        return self.get_queryset().filter(avaliado=usuario_id).aggregate(Avg('nota'))
