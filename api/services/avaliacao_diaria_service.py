@@ -5,7 +5,7 @@ def verificar_avaliacao_usuario(diaria_id, usuario_id):
     avaliacao_diaria = AvaliacaoDiaria.objects.filter(diaria=diaria_id)
     for avaliacao in avaliacao_diaria:
         if avaliacao.avaliador.id == usuario_id:
-            raise serializers.ValidationError("Esse usuário já avaliou a diária")
+            return True
     return False
 
 def verificar_avaliacao(diaria_id):

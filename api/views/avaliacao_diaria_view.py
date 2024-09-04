@@ -19,7 +19,8 @@ class AvaliacaoDiariaID(APIView):
         serializer_avaliacao_diaria = avaliacao_diaria_serializer.AvaliacaoDiariaSerializer(
             data=request.data)
         # verificar se o usuário que está avaliando não tinha avaliado anteriormente
-        avaliacao_diaria_service.verificar_avaliacao_usuario(diaria_id, usuario_logado.id)
+        if avaliacao_diaria_service.verificar_avaliacao_usuario(diaria_id, usuario_logado.id):
+            raise serializers.ValidationError("Esse usuário já avaliou a diária")
         if serializer_avaliacao_diaria.is_valid():
             if usuario_logado.tipo_usuario == 1:
                 avaliado = diaria.diarista
