@@ -7,7 +7,7 @@ env = environ.Env()
 
 env.read_env(env.str('ENV_PATH','./ediaristas/.env'))
 
-# pagarme.authentication_key(env('PAGARME_KEY'))
+pagarme.authentication_key(env('PAGARME_KEY'))
 
 def realizar_pagamento(diaria, card_hash):
     diaria = listar_diaria_id(diaria.id)
