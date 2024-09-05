@@ -33,7 +33,7 @@ def realizar_pagamento(diaria, card_hash):
             {
                 "id": diaria.id,
                 "title": "Diária e-diaristas",
-                "unit_price": diaria.preco,
+                "unit_price": float(diaria.preco) * 100,
                 "quantity": "1",
                 "tangible": False
             }
