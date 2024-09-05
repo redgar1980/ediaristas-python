@@ -7,13 +7,14 @@ env = environ.Env()
 
 env.read_env(env.str('ENV_PATH','./ediaristas/.env'))
 
-pagarme.authentication_key(env('PAGARME_KEY'))
+# pagarme.authentication_key(env('PAGARME_KEY'))
 
 def realizar_pagamento(diaria, card_hash):
     diaria = listar_diaria_id(diaria.id)
+    diaria = listar_diaria_id(diaria.id)
     cliente = diaria.cliente
     params = {
-        "amount": diaria.preco * 100,
+        "amount": float(diaria.preco) * 100,
         "card_hash": card_hash,
         "custormer": {
             "external_id": cliente.id,
@@ -38,6 +39,8 @@ def realizar_pagamento(diaria, card_hash):
             }
         ]
     }
+    transacao = pagarme.transaction.create(params)
+    print(transacao['status'])
     Pagamento.objects.create(status="pago",
         valor=diaria.preco, transacao_id="12a9aqwe",
         diaria=diaria)
