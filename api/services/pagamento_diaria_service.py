@@ -1,5 +1,6 @@
 import pagarme
 import environ
+from rest_framework import serializers
 from ..models import Pagamento
 from .diaria_service import atualizar_status_diaria, listar_diaria_id
 
@@ -41,6 +42,20 @@ def realizar_pagamento(diaria, card_hash):
     }
     transacao = pagarme.transaction.create(params)
     print(transacao['status'])
+    if transacao['status'] == 'paid':
+        Pagamento.objects.create(status="pago",
+            valor=diaria.preco, transacao_id=transacao['tid'],
+            diaria=diaria)
+        atualizar_status_diaria(diaria.id, 2)
+        return
+    else:
+        Pagamento.objects.create(status="reprovado",
+            valor=diaria.preco, transacao_id=transacao['tid'],
+            diaria=diaria)
+        atualizar_status_diaria(diaria.id, 1)
+        raise serializers.ValidationError("Pagamento recusado")
+    
+def realizar_pagamento_test(diaria, card_hash):
     Pagamento.objects.create(status="pago",
         valor=diaria.preco, transacao_id="12a9aqwe",
         diaria=diaria)
