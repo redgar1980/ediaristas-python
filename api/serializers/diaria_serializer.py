@@ -108,11 +108,19 @@ class DiariaSerializer(serializers.ModelSerializer):
                     kwargs={'diaria_id': obj.id}))
         elif obj.status == 2:
             links.add_get('self', reverse('diaria-detail', kwargs={'diaria_id': obj.id}))
+            data_atendimento = obj.data_atendimento.replace(tzinfo=None)
+            if data_atual < data_atendimento:
+                links.add_patch('cancelar_diaria', reverse('cancelar-diaria-detail',
+                    kwargs={'diaria_id': obj.id}))
             if usuario.tipo_usuario == 2:
                 links.add_post('candidatar_diaria', reverse('candidatar-diarista-diaria-list', 
                     kwargs={'diaria_id': obj.id}))
         elif obj.status == 3:
             links.add_get('self', reverse('diaria-detail', kwargs={'diaria_id': obj.id}))
+            data_atendimento = obj.data_atendimento.replace(tzinfo=None)
+            if data_atual < data_atendimento:
+                links.add_patch('cancelar_diaria', reverse('cancelar-diaria-detail',
+                    kwargs={'diaria_id': obj.id}))
             if usuario.tipo_usuario == 1:
                 data_atendimento = obj.data_atendimento.replace(tzinfo=None)
                 if data_atual >= data_atendimento:
@@ -120,7 +128,7 @@ class DiariaSerializer(serializers.ModelSerializer):
                         reverse('confirmar-presenca-diaria-detail',
                         kwargs={'diaria_id': obj.id}))
         elif obj.status == 4:
-            avaliacoes_diaria = obj.avaliacao_diaria.all() or None
+            avaliacoes_diaria = obj.avaliacao_diaria.filter(avaliador__isnull=False) or None
             if avaliacoes_diaria is None:
                 links.add_patch('avaliar_diaria', reverse('avaliacao-diaria-detail',
                     kwargs={'diaria_id': obj.id}))
