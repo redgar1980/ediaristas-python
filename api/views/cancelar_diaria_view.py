@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status as status_http
 from ..permissions import dono_permission
 from ..serializers import cancelar_diaria_serializer
-from ..services import diaria_service
+from ..services import diaria_service, cancelar_diaria_service
 
 class CancelarDiariaID(APIView):
     permission_classes = [dono_permission.DonoPermission, ]
@@ -14,5 +14,9 @@ class CancelarDiariaID(APIView):
         self.check_object_permissions(self.request, diaria)
         if serializer_cancelar_diaria.is_valid():
             # iniciar a lógica de negócio
+            cancelar_diaria_service.cancelar_diaria(diaria_id, request.user.id)
             # alterar o status da diária para 5
+            diaria_service.atualizar_status_diaria(diaria_id, 5)
             # retornar mensagem de cancelamento feito com sucesso
+            return Response("Diária cancelada com sucesso", status=status_http.HTTP_200_OK)
+        return Response(serializer_cancelar_diaria.errors, status=status_http.HTTP_400_BAD_REQUEST)

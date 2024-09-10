@@ -13,7 +13,8 @@ from .views import (diaristas_localidade_view,
                     oportunidade_view,
                     candidatar_diarista_diaria_view,
                     confirmar_presenca_diarista_view,
-                    avaliacao_diaria_view)
+                    avaliacao_diaria_view,
+                    cancelar_diaria_view)
 
 urlpatterns = [
      path('diaristas/localidades', diaristas_localidade_view.DiaristasLocalidades.as_view(),
@@ -40,6 +41,8 @@ urlpatterns = [
      path('diarias/<int:diaria_id>/avaliacao',
           avaliacao_diaria_view.AvaliacaoDiariaID.as_view(),
           name='avaliacao-diaria-detail'),
+     path('diarias/<int:diaria_id>/cancelar', cancelar_diaria_view.CancelarDiariaID.as_view(),
+          name='cancelar-diaria-detail'),
      path('usuarios/cidades-atendidas', 
           cidades_atendimento_diarista_view.CidadesAtendimentoDiaristaID.as_view(),
           name='cidades-atendimento-diarista-detail'),
