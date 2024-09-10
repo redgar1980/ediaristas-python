@@ -9,8 +9,7 @@ class CancelarDiariaID(APIView):
     permission_classes = [dono_permission.DonoPermission, ]
 
     def patch(self, request, diaria_id, format=None):
-        serializer_cancelar_diaria = cancelar_diaria_serializer.CancelarDiariaSerializer(
-                                                                        data=request.data)
+        serializer_cancelar_diaria = cancelar_diaria_serializer.CancelarDiariaSerializer(data=request.data)
         diaria = diaria_service.listar_diaria_id(diaria_id)
         self.check_object_permissions(self.request, diaria)
         if serializer_cancelar_diaria.is_valid():
