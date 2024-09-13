@@ -55,6 +55,7 @@ class UsuarioSerializer(serializers.ModelSerializer):
             links.add_put('cadastrar_endereco', reverse('endereco-diarista-detail'))
             links.add_put('relacionar_cidades', reverse('cidades-atendimento-diarista-detail'))
             links.add_get('lista_oportunidades', reverse('oportunidade-list'))
+            links.add_get('lista_pagamentos', reverse('pagamento-list'))
         return links.to_array()
 
 
