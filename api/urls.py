@@ -15,7 +15,8 @@ from .views import (diaristas_localidade_view,
                     confirmar_presenca_diarista_view,
                     avaliacao_diaria_view,
                     cancelar_diaria_view,
-                    pagamento_view)
+                    pagamento_view,
+                    foto_usuario_view)
 
 urlpatterns = [
      path('diaristas/localidades', diaristas_localidade_view.DiaristasLocalidades.as_view(),
@@ -29,6 +30,7 @@ urlpatterns = [
      path('', inicio_view.Inicio.as_view(), name='inicio'),
      path('usuarios', usuario_view.Usuario.as_view(), name='usuario-list'),
      path('usuarios/enderecos',  endereco_diarista_view.EnderecoDiarista.as_view() ,name='endereco-diarista-detail'),
+     path('usuarios/foto', foto_usuario_view.FotoUsuario.as_view(), name='foto-usuario-list'),
      path('me', me_view.Me.as_view(), name='me-list'),
      path('diarias', diaria_view.Diaria.as_view(), name='diaria-list'),
      path('diarias/<int:diaria_id>', diaria_view.DiariaID.as_view(), name='diaria-detail'),

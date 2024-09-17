@@ -2,11 +2,9 @@ from datetime import date
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 from ..models import Usuario
-from ..services import usuario_service
-
 
 class EditarUsuarioSerializer(serializers.ModelSerializer):
-    foto_usuario = serializers.ImageField(max_length=None, use_url=True, allow_null=False,
+    foto_usuario = serializers.ImageField(max_length=None, use_url=True, allow_null=True,
         required=False)
     password = serializers.CharField(required=False, write_only=True)
     password_confirmation = serializers.CharField(required=False, write_only=True)
@@ -18,7 +16,7 @@ class EditarUsuarioSerializer(serializers.ModelSerializer):
         fields = ('nome_completo', 'cpf', 'nascimento', 'foto_usuario', 'telefone',
             'password', 'password_confirmation', 'new_password', 'chave_pix')
 
-    def validate__new_password(self, new_password):
+    def validate_new_password(self, new_password):
         password_confirmation = self.initial_data["password_confirmation"]
         if new_password != password_confirmation:
             raise serializers.ValidationError("Senhas não combinam")
@@ -40,3 +38,8 @@ class EditarUsuarioSerializer(serializers.ModelSerializer):
         if idade > 100:
             raise serializers.ValidationError("Idade maior que a permitida")
         return nascimento
+    
+    def update(self, instance, validated_data):
+        if 'new_password' in validated_data:
+            validated_data['password'] = make_password(validated_data['new_password'])
+        return super().update(instance, validated_data)
