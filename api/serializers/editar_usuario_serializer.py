@@ -20,7 +20,7 @@ class EditarUsuarioSerializer(serializers.ModelSerializer):
         password_confirmation = self.initial_data["password_confirmation"]
         if new_password != password_confirmation:
             raise serializers.ValidationError("Senhas não combinam")
-        return make_password(new_password)
+        return new_password
     
     def validade_password(self,password):
         usuario = self.context['request'].user
